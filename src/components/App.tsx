@@ -1,29 +1,25 @@
 import {useEffect, useRef, useState} from "react";
 import {ITodo} from '../types/data';
 import {TodoList} from "./TodoList";
+import InputTodoText from "./InputTodoText";
+import {useAppDispatch} from "../hook";
+import {addTodo} from '../store/todoSlice';
 
 const App: React.FC = () => {
+    const dispatch = useAppDispatch();
     const [value, changeText] = useState('');
     const [todos, setTodos] = useState<ITodo[]>([]);
 
 
-    const addTodo = () => {
-        if (value) {
-            setTodos([...todos, {
-                id: Date.now(),
-                title: value,
-                complete: false
-            }]);
-            changeText('');
-        };
-    };
-
-    const handleChangeText: React.ChangeEventHandler<HTMLInputElement> = (e) => {
-        changeText(e.target.value);
+    const addTask = () => {
+        dispatch(addTodo(value));
+    }
+    const handleChangeText = (str: string) => {
+        changeText(str);
     }
 
-    const handleKeyDown:  React.KeyboardEventHandler<HTMLInputElement> = (e) => {
-        if (e.key === 'Enter') addTodo();
+    const handleKeyDown = (str: string) => {
+        dispatch(addTodo(str));
     }
 
     const deleteTodo = (id: number): void => {
@@ -51,11 +47,8 @@ const App: React.FC = () => {
 
     return (
         <div>
-            <div>
-                <input value={value} onChange={handleChangeText} ref={inputRef} onKeyDown={handleKeyDown}/>
-                <button onClick={addTodo}>Add Task</button>
-            </div>
-            <TodoList items={todos} deleteTodo={deleteTodo} toggleTodo={toggleTodo}/>
+            <InputTodoText value={value} handleChangeText={handleChangeText} addTask={addTask}/>
+            <TodoList/>
         </div>
     )
 }

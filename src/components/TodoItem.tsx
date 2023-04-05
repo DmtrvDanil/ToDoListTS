@@ -1,16 +1,21 @@
-import {ITodo} from '../types/data';
+import {useAppDispatch} from "../hook";
+import {toggleComplete, removeTodo} from '../store/todoSlice';
 
-interface TodoItem extends ITodo {
-    toggleTodo: (id: number) => void;
-    deleteTodo: (id: number) => void;
+
+interface TodoItemProps {
+    id: string;
+    title: string;
+    completed: boolean;
 }
-const TodoItem: React.FC<TodoItem> = (props) => {
-    const {id, title, complete} = props;
+
+const TodoItem: React.FC<TodoItemProps> = (props) => {
+    const {id, title, completed} = props;
+    const dispatch = useAppDispatch();
     return (
         <div>
-            <input type="checkbox" checked={complete} onChange={() => props.toggleTodo(id)}/>
+            <input type="checkbox" checked={completed} onChange={() => dispatch(toggleComplete(id))}/>
             {title}
-            <button onClick={() => props.deleteTodo(id)}>X</button>
+            <button onClick={() => dispatch(removeTodo(id))}>X</button>
         </div>
     )
 };
