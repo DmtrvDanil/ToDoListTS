@@ -15,7 +15,7 @@ const TodoItem: React.FC<TodoItemProps> = (props) => {
         <div>
             <input type="checkbox" checked={completed} onChange={() => dispatch(toggleComplete(id))}/>
             {title}
-            <button onClick={() => dispatch(removeTodo(id))}>X</button>
+            <button onClick={() => dispatch(removeTodo(id))}>&times;</button>
         </div>
     )
 };

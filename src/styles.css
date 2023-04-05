@@ -1,0 +1,31 @@
+.App {
+    text-align: center;
+}
+
+ul {
+    list-style: none;
+}
+
+li {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+input:checked + span {
+    text-decoration: line-through;
+}
+span {
+    margin-left: 10px;
+    border: 1px solid black;
+    padding: 2px;
+}
+
+button:last-child {
+    color: red;
+    cursor: pointer;
+    background: none;
+    border: none;
+    outline: none   ;
+}
